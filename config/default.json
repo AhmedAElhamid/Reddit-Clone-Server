@@ -1,0 +1,6 @@
+{
+  "jwtPrivateKey": "unsecureKey",
+  "db": "mongodb://localhost/reddit",
+  "port": "5000",
+  "requiresAuth": true
+}
