@@ -10,12 +10,14 @@ there is 2 collections one for the Users and one for the Subreddits
 
 ## Routes
 
-** 1. Auth route (/auth) **
+1. Auth route (/auth)
 - post for login by email and password
+
 
 2. user route (/user)
 - get user info (/me)
 - post for registering a new user
+
 
 3. subreddit route (/subreddit)
 - get all subreddits
@@ -23,6 +25,7 @@ there is 2 collections one for the Users and one for the Subreddits
 - post a new subreddit
 - update an existing subreddit
 - delete a subreddit
+
 
 4. post route (/post)
 - get all posts published by the current user
@@ -33,6 +36,7 @@ there is 2 collections one for the Users and one for the Subreddits
 - upvote a post
 - downvote a post
 - delete a post
+
 
 5. comment route(/comment)
 - get all comments for a post
