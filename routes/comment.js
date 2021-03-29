@@ -5,7 +5,6 @@ const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
 const express = require('express');
 const router = express.Router();
-const paginate = require('express-paginate');
 const mongoose = require('mongoose')
 const {getAuthor} = require('../util/postsInteractionsHelperMethods')
 
@@ -139,7 +138,7 @@ router.delete("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res
 })
 
 //upvote comment
-router.put("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>{
+router.put("/upvote/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>{
     const postId = req.params.postId;
     const subredditId = req.params.subredditId;
     const commentId = req.params.id;
@@ -157,7 +156,7 @@ router.put("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>
         .map(c => {
             if(c._id.toString() === commentId) {
                 if(c.usersUpVoted.includes(userId)) return res.status(400)
-                    .send("post already upvoted")
+                    .send("comment already upvoted")
                 if(c.usersDownVoted.includes(userId)){
                     --c.downVotes
                     c.usersDownVoted = c.usersDownVoted.filter(u => u.toString()!==userId)
@@ -188,7 +187,7 @@ router.put("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>
 })
 
 //downvote comment
-router.put("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>{
+router.put("/downvote/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>{
     const postId = req.params.postId;
     const subredditId = req.params.subredditId;
     const commentId = req.params.id;
@@ -206,7 +205,7 @@ router.put("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>
         .map(c => {
             if(c._id.toString() === commentId) {
                 if(c.usersDownVoted.includes(userId)) return res.status(400)
-                    .send("post already downvoted")
+                    .send("comment already downvoted")
                 if(c.usersUpVoted.includes(userId)){
                     --c.upVotes
                     c.usersUpVoted = c.usersUpVoted.filter(u => u.toString()!==userId)
@@ -218,7 +217,7 @@ router.put("/:subredditId/:postId/:id",[auth,validateObjectId],async (req,res)=>
             return c
         })
 
-    if(!comment.upVotes) return res.status(404)
+    if(!comment.downVotes) return res.status(404)
         .send("comment not found");
 
     const updated = await Subreddit.findOneAndUpdate({_id:subredditId,
