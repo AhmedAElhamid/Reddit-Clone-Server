@@ -10,7 +10,7 @@ there is 2 collections one for the Users and one for the Subreddits
 
 ## Routes
 
-1. Auth route (/auth)
+** 1. Auth route (/auth) **
 - post for login by email and password
 
 2. user route (/user)
